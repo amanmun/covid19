@@ -63,7 +63,9 @@ class Home extends React.Component {
                 </div>
               </Grid>
             </Grid>
+            <div className="fadeInUp" style={{ animationDelay: "5s" }}>
             <Footer />
+            </div>
           </Container>
         </Paper>
       </div>

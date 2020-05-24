@@ -66,7 +66,7 @@ const Hometheme = () => {
             <CssBaseline />
             <Paper className={classes.paper}>
                 <div className={classes.root}>
-                    <Router>
+                    <Router basename={process.env.PUBLIC_URL}>
                         <Appbar toggleDarkMode={toggleDarkMode} />
                         <Switch>
                             <Route exact path='/' component={Home} />
