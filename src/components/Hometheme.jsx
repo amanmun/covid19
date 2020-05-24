@@ -66,14 +66,14 @@ const Hometheme = () => {
             <CssBaseline />
             <Paper className={classes.paper}>
                 <div className={classes.root}>
-                    <Router basename={process.env.PUBLIC_URL}>
+                    <Router >
                         <Appbar toggleDarkMode={toggleDarkMode} />
                         <Switch>
-                            <Route exact path='/' component={Home} />
-                            <Route path='/Testing' component={Testing} />
-                            <Route path='/Essentials' component={Essentials} />
-                            <Route path='/Symptoms' component={Symptoms} />
-                            <Route path='/About' component={About} />
+                            <Route exact path={process.env.PUBLIC_URL + '/'} component={Home} />
+                            <Route path={process.env.PUBLIC_URL + '/Testing'} component={Testing} />
+                            <Route path={process.env.PUBLIC_URL + '/Essentials'} component={Essentials} />
+                            <Route path={process.env.PUBLIC_URL + '/Symptoms'} component={Symptoms} />
+                            <Route path={process.env.PUBLIC_URL + '/About'} component={About} />
                         </Switch>
                     </Router >
                 </div>
