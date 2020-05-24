@@ -91,7 +91,7 @@ export default function Appbar(props) {
           </ListItemText>
         </ListItem>
         <Divider />
-        <Link to={process.env.PUBLIC_URL + '/'} onClick={toggleDrawer(false)} className={classes.link}>
+        <Link to='/' onClick={toggleDrawer(false)} className={classes.link}>
           <ListItem button className={classes.listitem} >
             <Icon.Home />
             <ListItemText>
@@ -99,7 +99,7 @@ export default function Appbar(props) {
             </ListItemText>
           </ListItem>
         </Link>
-        <Link to={process.env.PUBLIC_URL + '/Testing'} onClick={toggleDrawer(false)} className={classes.link}>
+        <Link to='/Testing' onClick={toggleDrawer(false)} className={classes.link}>
           <ListItem button className={classes.listitem} >
             <Icon.Activity />
             <ListItemText>
@@ -107,7 +107,7 @@ export default function Appbar(props) {
             </ListItemText>
           </ListItem>
         </Link>
-        <Link to={process.env.PUBLIC_URL + '/Essentials'} onClick={toggleDrawer(false)} className={classes.link}>
+        <Link to='/Essentials' onClick={toggleDrawer(false)} className={classes.link}>
           <ListItem button className={classes.listitem} >
             <Icon.Archive />
             <ListItemText>
@@ -115,7 +115,7 @@ export default function Appbar(props) {
             </ListItemText>
           </ListItem>
         </Link>
-        <Link to={process.env.PUBLIC_URL + '/Symptoms'} onClick={toggleDrawer(false)} className={classes.link}>
+        <Link to='/Symptoms' onClick={toggleDrawer(false)} className={classes.link}>
           <ListItem button className={classes.listitem} >
             <Icon.Book />
             <ListItemText>
@@ -123,7 +123,7 @@ export default function Appbar(props) {
             </ListItemText>
           </ListItem>
         </Link>
-        <Link to={process.env.PUBLIC_URL + '/About'} onClick={toggleDrawer(false)} className={classes.link}>
+        <Link to='/About' onClick={toggleDrawer(false)} className={classes.link}>
           <ListItem button className={classes.listitem} >
             <Icon.HelpCircle />
             <ListItemText>

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { makeStyles, createMuiTheme, MuiThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
 import Appbar from './Appbar';
 import Testing from './Testing';
@@ -66,16 +66,14 @@ const Hometheme = () => {
             <CssBaseline />
             <Paper className={classes.paper}>
                 <div className={classes.root}>
-                    <Router >
                         <Appbar toggleDarkMode={toggleDarkMode} />
                         <Switch>
-                            <Route exact path={process.env.PUBLIC_URL + '/'} component={Home} />
-                            <Route path={process.env.PUBLIC_URL + '/Testing'} component={Testing} />
-                            <Route path={process.env.PUBLIC_URL + '/Essentials'} component={Essentials} />
-                            <Route path={process.env.PUBLIC_URL + '/Symptoms'} component={Symptoms} />
-                            <Route path={process.env.PUBLIC_URL + '/About'} component={About} />
+                            <Route exact path='/' component={Home} />
+                            <Route path='/Testing' component={Testing} />
+                            <Route path='/Essentials' component={Essentials} />
+                            <Route path='/Symptoms' component={Symptoms} />
+                            <Route path='/About' component={About} />
                         </Switch>
-                    </Router >
                 </div>
             </Paper >
         </MuiThemeProvider >
