@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { makeStyles, createMuiTheme, MuiThemeProvider, responsiveFontSizes } from '@material-ui/core/styles';
+import { makeStyles, createMuiTheme, MuiThemeProvider, responsiveFontSizes} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import { Switch, Route } from 'react-router-dom';
@@ -14,7 +14,10 @@ import Essentials from './Essentials';
 const themeobject = {
     palette: {
         type: "light",
-    }
+        background: {
+            paper:"#ffffff",
+        }
+    },
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +49,15 @@ const useDarkMode = () => {
             ...theme,
             palette: {
                 ...theme.palette,
-                type: type === "light" ? "dark" : "light"
+                type: type === "light" ? "dark" : "light",
+                text: {
+                    secondary:type==="light"?"#eeeeee":"#455a64",
+                    primary:type==="light"?"#eeeeee":"#455a64" 
+                },
+                background: {
+                    paper:type==="light"?"#000015":"#ffffff",
+                    defaul:type==="light"?"#000015":"#ffffff",
+                }
             }
         }
         setTheme(updatedTheme)

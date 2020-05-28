@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Paper from '@material-ui/core/Paper';
 import { scaleLinear } from 'd3-scale';
@@ -29,8 +29,15 @@ const Map = ({ data: { data1_s } }) => {
     let [rcvd, setRcvd] = useState('');
     let [dcsd, setDcsd] = useState('');
     let [sname, setSname] = useState('');
-    let lr = 'rgba(255,0,0,0.15)';
-    let hr = 'rgba(255,0,0,0.8)';
+    let [value, setValue] = useState(1);
+    let [lr, setLr] = useState('rgba(255,0,0,0.15)');
+    let [hr, setHr] = useState('rgba(255,0,0,0.8)');
+    let [maximum, setMaximum] = useState(0);
+    let [minimum, setMinimum] = useState(0);
+
+    let minC, maxC;
+
+    const theme = useTheme();
 
     const classes = useMapStyles();
 
@@ -38,21 +45,38 @@ const Map = ({ data: { data1_s } }) => {
         return <div></div>
     }
     else {
-        let output1 = [];
 
-        for (let i = 0; i < data1_s.length; i++)
-            output1.push(parseInt(data1_s[i].confirmed));
-
-        let maxValue = output1[1];
-        let minValue = output1[1];
-        for (let i = 1; i < output1.length; i++) {
-            if (output1[i] > maxValue) {
-                maxValue = output1[i];
+        function getMax(arr, prop) { //functions to getmax object based on key
+            let max;
+            for (var i = 0; i < arr.length; i++) {
+                if (max == null || parseInt(arr[i][prop]) > parseInt(max[prop]))
+                    max = arr[i];
             }
-            if (output1[i] < minValue) {
-                minValue = output1[i];
-            }
+            return max;
         }
+
+        function getMin(arr, prop) { //functions to getmin object based on key
+            let min;
+            for (var i = 0; i < arr.length; i++) {
+                if (min == null || parseInt(arr[i][prop]) < parseInt(min[prop]))
+                    min = arr[i];
+            }
+            return min;
+        }
+
+        let data1 = [...data1_s];
+        data1.splice(0, 1) //removing total
+
+        let maxD = getMax(data1, "deaths").deaths;
+        let maxA = getMax(data1, "active").active;
+        let maxR = getMax(data1, "recovered").recovered;
+        maxC = getMax(data1, "confirmed").confirmed;
+
+        let minD = getMin(data1, "deaths").deaths;
+        let minA = getMin(data1, "active").active;
+        let minR = getMin(data1, "recovered").recovered;
+        minC = getMin(data1, "confirmed").confirmed;
+
         const INDIA_TOPO_JSON = require('./map/india.json');
 
         const PROJECTION_CONFIG = {
@@ -68,8 +92,8 @@ const Map = ({ data: { data1_s } }) => {
             },
             hover: {
                 fill: 'white',
-                transition: 'all 250ms',
-                stroke: '#424242',
+                transition: 'all 100ms',
+                stroke: hr,
             },
             pressed: {
                 outline: 'none'
@@ -77,7 +101,7 @@ const Map = ({ data: { data1_s } }) => {
         };
 
         const colorScale = scaleLinear()
-            .domain([0, maxValue])
+            .domain([minimum, maximum])
             .range([lr, hr]);
 
         const onMouseEnter = (geo, current) => {
@@ -87,16 +111,16 @@ const Map = ({ data: { data1_s } }) => {
                 setRcvd(`${current.recovered}`)
                 setDcsd(`${current.deaths}`)
                 setSname(`${current.state}`)
-
             };
         };
 
-        function maphov(classname, name1, name2, statevar, data) {
+        function maphov(classname, name1, name2, statevar, data, color, x, lr1, hr1, max, min) {
             return (
-                <Grid item>
-                    <Paper elevation={0} align="center" className={classname}>
+                <Grid item sm={3}>
+                    <Paper onClick={() => { setValue(x); setLr(lr1); setHr(hr1); setMaximum(max); setMinimum(min) }}
+                        style={{ backgroundColor: color, cursor: "pointer" }} elevation={0} align="center" className={classname}>
                         <Typography variant="button">
-                            {window.innerWidth > "768" ? name1 : name2}
+                            {window.innerWidth >= "768" ? name1 : name2}
                         </Typography>
                         <Typography variant="h6">
                             {statevar === '' ? formatNumber(data) : formatNumber(statevar)}
@@ -105,12 +129,51 @@ const Map = ({ data: { data1_s } }) => {
                 </Grid>
             )
         }
+        function returnMap(datakey) {
+            if (maximum === 0) {
+                setMaximum(maxC)
+                setMinimum(minC)
+            }
+
+            return (
+
+                <ComposableMap
+                    projectionConfig={PROJECTION_CONFIG}
+                    projection="geoMercator"
+                    data-tip=""
+                    viewBox="320 180 220 220"
+                    preserveAspectRatio="xMidYMid meet"
+                >
+                    <Geographies geography={INDIA_TOPO_JSON}>
+                        {({ geographies }) =>
+                            geographies.map(geo => {
+
+                                const current = data1.find(s => s.state === geo.properties.st_nm);
+                                return (
+                                    <Geography
+                                        key={geo.rsmKey}
+                                        geography={geo}
+                                        fill={current ?
+                                            datakey === 1 ? colorScale(current.confirmed) :
+                                                datakey === 2 ? colorScale(current.active) :
+                                                    datakey === 3 ? colorScale(current.recovered) : colorScale(current.deaths)
+                                            : DEFAULT_COLOR}
+                                        style={geographyStyle}
+                                        onMouseEnter={onMouseEnter(geo, current)}
+                                    />
+                                );
+                            })
+                        }
+                    </Geographies>
+                </ComposableMap>
+            )
+        }
         return (
             <div>
                 <Box m="auto" textAlign="center" bgcolor="background.paper">
                     <Typography variant="h6">
                         India Map
-                </Typography>
+                    </Typography>
                 </Box>
                 <Box mt={3}>
                     <Box mt={2} mb={2} color="text.secondary">
@@ -120,37 +183,14 @@ const Map = ({ data: { data1_s } }) => {
                     </Box>
                     <Box>
                         <Grid container direction="row" justify="space-evenly" alignItems="flex-start">
-                            {maphov(classes.tbcnfd, "confirmed", "cnfd", cnfd, data1_s[0].confirmed)}
-                            {maphov(classes.tbactv, "active", "actv", actv, data1_s[0].active)}
-                            {maphov(classes.tbrcvd, "recovered", "rcvd", rcvd, data1_s[0].recovered)}
-                            {maphov(classes.tbdcsd, "deceased", "dcsd", dcsd, data1_s[0].deaths)}
+                            {maphov(classes.tbcnfd, "confirmed", "cnfd", cnfd, data1_s[0].confirmed, "rgba(255,0,0,0.1)", 1, "rgba(255,0,0,0.15)", "rgba(255,0,0,0.8)", maxC, minC)}
+                            {maphov(classes.tbactv, "  active  ", "actv", actv, data1_s[0].active, "rgba(0,0,255,0.1)", 2, "rgba(0,0,255,0.15)", "rgba(0,0,255,0.8)", maxA, minA)}
+                            {maphov(classes.tbrcvd, "recovered", "rcvrd", rcvd, data1_s[0].recovered, "rgba(0,255,0,0.1)", 3, "rgba(0,255,0,0.15)", "rgba(0,255,0,0.8)", maxR, minR)}
+                            {maphov(classes.tbdcsd, "deceased", "dcsd", dcsd, data1_s[0].deaths, theme.palette.action.selected, 4, "#E8E8E8", "#424242", maxD, minD)}
                         </Grid>
                     </Box>
-                    <ComposableMap
-                        projectionConfig={PROJECTION_CONFIG}
-                        projection="geoMercator"
-                        data-tip=""
-                        viewBox="320 180 220 220"
-                        preserveAspectRatio="xMidYMid meet"
-                    >
-                        <Geographies geography={INDIA_TOPO_JSON}>
-                            {({ geographies }) =>
-                                geographies.map(geo => {
-
-                                    const current = data1_s.find(s => s.state === geo.properties.st_nm);
-                                    return (
-                                        <Geography
-                                            key={geo.rsmKey}
-                                            geography={geo}
-                                            fill={current ? colorScale(current.confirmed) : DEFAULT_COLOR}
-                                            style={geographyStyle}
-                                            onMouseEnter={onMouseEnter(geo, current)}
-                                        />
-                                    );
-                                })
-                            }
-                        </Geographies>
-                    </ComposableMap>
+                    <div>{returnMap(value)}</div>
+                    <Typography variant="caption">Click on the tabs to see diff. choropleths</Typography>
                 </Box>
             </div>
         );

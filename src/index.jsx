@@ -5,11 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
     <Suspense fallback={''}>
       <App />
-    </Suspense>
-  </React.StrictMode>,
+    </Suspense>,
   document.getElementById('root')
 );
 

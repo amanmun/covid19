@@ -6,6 +6,7 @@ import Zonecheck from './Zonecheck';
 import Map from './Map';
 import Chart from './Chart';
 import Footer from './Footer';
+import Predictions from './Predictions';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -46,19 +47,20 @@ class Home extends React.Component {
               <Grid item md={6} className="pt-64">
                 <div className="fadeInUp" style={{ animationDelay: "1s" }}>
                   <Topstats data={modifiedData1} />
+                  <Predictions data={modifiedData1} />
                 </div>
                 <div className="fadeInUp" style={{ animationDelay: "2s" }}>
                   <Zonecheck data={modifiedData1} />
                 </div>
-                <div className="fadeInUp" style={{ animationDelay: "3s" }}>
+                <div className="fadeInUp" style={{ animationDelay: "2.75s" }}>
                   <Datatable data={modifiedData1} />
                 </div>
               </Grid>
               <Grid item md={6} className="pt-64">
-                <div className="fadeInUp" style={{ animationDelay: "2s" }}>
+                <div className="fadeInUp" style={{ animationDelay: "3.5s" }}>
                   <Map data={modifiedData1} />
                 </div>
-                <div className="fadeInUp" style={{ animationDelay: "3s" }}>
+                <div className="fadeInUp" style={{ animationDelay: "4.25s" }}>
                   <Chart data={modifiedData1} />
                 </div>
               </Grid>

@@ -25,15 +25,36 @@ const useRowStyles = makeStyles((theme) => ({
     cursor: "pointer",
 
   },
-  thclass: {
-    backgroundColor: theme.palette.action.disabled,
-    fontSize: 11
+  thclass1: {
+    fontSize: 11,
+    color: theme.palette.warning.main,
+    backgroundColor: "rgba(255,152,0,0.1)",
+  },
+  thclass2: {
+    fontSize: 11,
+    color: theme.palette.error.main,
+    backgroundColor: "rgba(255,0,0,0.1)",
+  },
+  thclass3: {
+    fontSize: 11,
+    color: theme.palette.info.main,
+    backgroundColor: "rgba(0,0,255,0.1)",
+  },
+  thclass4: {
+    fontSize: 11,
+    color: theme.palette.success.main,
+    backgroundColor: "rgba(0,255,0,0.1)",
+  },
+  thclass5: {
+    fontSize: 11,
+    color: theme.palette.text.secondary,
+    backgroundColor: theme.palette.action.selected,
   },
   tcclass: {
     paddingRight: 2,
     paddingLeft: 2,
     color: theme.palette.action.active,
-    fontSize: 12,
+    fontSize: "0.825rem",
     fontWeight: 700
   },
   tbcnfd: {
@@ -101,17 +122,17 @@ function Row(props) {
               <Table size="small">
                 <TableHead>
                   <TableRow>
-                    <TableCell align="center" className={classes.tcclass}>{window.innerWidth > "768" ? "District" : "Dist"}</TableCell>
+                    <TableCell className={classes.tcclass}>{window.innerWidth > "768" ? "District" : "Dist"}</TableCell>
                     <TableCell align="center" className={classes.tcclass}>{window.innerWidth > "768" ? "Confirmed" : "Cnfd"}</TableCell>
                     <TableCell align="center" className={classes.tcclass}>{window.innerWidth > "768" ? "Active" : "Actv"}</TableCell>
-                    <TableCell align="center" className={classes.tcclass}>{window.innerWidth > "768" ? "Recovered" : "Rcvd"}</TableCell>
+                    <TableCell align="center" className={classes.tcclass}>{window.innerWidth > "768" ? "Recovered" : "Rcvrd"}</TableCell>
                     <TableCell align="center" className={classes.tcclass}>{window.innerWidth > "768" ? "Deceased" : "Dcsd"}</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {Object.entries(row.districtdata).map((row1, i) => (
                     <TableRow key={row1[0]}>
-                      <TableCell align="center" className={classes.tcclass}>{row1[0]}</TableCell>
+                      <TableCell className={classes.tcclass}>{row1[0]}</TableCell>
                       <TableCell align="center" className={classes.tcclass}>{formatNumber(row1[1].confirmed)}
                         <Typography className={classes.tbcnfd} variant="subtitle2">
                           {row1[1].delta.confirmed > 0 ? `[+${formatNumber(row1[1].delta.confirmed)}]` : ""}
@@ -172,7 +193,7 @@ export default function Datatable({ data: { data1_s, data2_sdd } }) {
           <Box p={6} m="auto" textAlign="center" bgcolor="background.paper">
             <Typography variant="h6">
               State and District Statistics
-                    </Typography>
+            </Typography>
           </Box>
           <Box flexGrow={1}>
             <Table stickyHeader className={classes.table} size="small">
@@ -180,11 +201,11 @@ export default function Datatable({ data: { data1_s, data2_sdd } }) {
               <TableHead>
                 <TableRow>
                   <TableCell />
-                  <TableCell style={{ paddingLeft: 15 }} className={classes.thclass}>State</TableCell>
-                  <TableCell align="center" className={classes.thclass}>{window.innerWidth > "768" ? "Confirmed" : "Cnfd"}</TableCell>
-                  <TableCell align="center" className={classes.thclass}>{window.innerWidth > "768" ? "Active" : "Actv"}</TableCell>
-                  <TableCell align="center" className={classes.thclass}>{window.innerWidth > "768" ? "Recovered" : "Rcvd"}</TableCell>
-                  <TableCell align="center" className={classes.thclass}>{window.innerWidth > "768" ? "Deceased" : "Dcsd"}</TableCell>
+                  <TableCell style={{ paddingLeft: 15 }} className={classes.thclass1}>State</TableCell>
+                  <TableCell align="center" className={classes.thclass2}>{window.innerWidth > "768" ? "Confirmed" : "Cnfd"}</TableCell>
+                  <TableCell align="center" className={classes.thclass3}>{window.innerWidth > "768" ? "Active" : "Actv"}</TableCell>
+                  <TableCell align="center" className={classes.thclass4}>{window.innerWidth > "768" ? "Recovered" : "Rcvrd"}</TableCell>
+                  <TableCell align="center" className={classes.thclass5}>{window.innerWidth > "768" ? "Deceased" : "Dcsd"}</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>

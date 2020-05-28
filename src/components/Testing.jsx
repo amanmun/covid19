@@ -38,12 +38,8 @@ class Testing extends React.Component {
             <div>
                 <Paper elevation={0}>
                     <Container maxWidth="lg">
-                        <div className="fadeInUp" style={{ animationDelay: "1.5s" }}>
-                            <Grid className="pt-64" direction="row" justify="space-around" alignItems="flex-start">
-                                <Grid item sm={12}>
-                                    <TestTopstats data={modifiedData1} />
-                                </Grid>
-                            </Grid>
+                        <div className="fadeInUp pt-100" style={{ animationDelay: "1.5s" }}>
+                            <TestTopstats data={modifiedData1} />
                         </div>
                         <Grid container direction="row" justify="space-evenly" alignItems="flex-start">
                             <Grid item md={6}>

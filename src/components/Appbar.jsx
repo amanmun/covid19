@@ -143,7 +143,7 @@ export default function Appbar(props) {
 
   const theme = useTheme()
   return (
-    <AppBar className={classes.appbar} position="static" elevation={0} color="inherit">
+    <AppBar className={classes.appbar} position="fixed" elevation={0} color="inherit">
       <Toolbar>
         <React.Fragment key={"left"}>
           <IconButton edge="start" className={classes.menuButton} color="inherit" onClick={toggleDrawer("left", true)}>
