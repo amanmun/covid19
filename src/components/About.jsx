@@ -66,7 +66,7 @@ export default function About() {
                                     </ListItemText>
                                     <ListItemText className={classes.list}>
                                         <Typography variant="subtitle2" style={{ fontSize: "18px" }}>
-                                            This website is heavily inspired by <a href="https://www.covid19india.org">www.covid19india.org</a> who are doing a great job in tracking the COVID-19 pandemic in India.
+                                            This website is inspired by <a href="https://www.covid19india.org">www.covid19india.org</a> who are doing a great job in tracking the COVID-19 pandemic in India.
                                         <br></br>Kudos to them !
                                         </Typography>
                                     </ListItemText>

@@ -30,10 +30,11 @@ export default function Footer() {
                     >
                         <Button href="https://api.covid19india.org/"><Icon.Database /> DATA API</Button>
                         <Button href="https://twitter.com/covid19indiaorg"><Icon.Twitter /> TWITTER</Button>
+                        <Button href="https://github.com/amanmun/covid19/tree/master"><Icon.GitHub /> GITHUB</Button>
                     </ButtonGroup>
                     <br></br>
                     <Typography variant="subtitle2" style={{textAlign: "center"}}>
-                        This website is heavily inspired by <a href="https://www.covid19india.org">www.covid19india.org</a> who are doing a great job in tracking the COVID-19 pandemic in India.<br></br>Kudos to them !
+                        This website is inspired by <a href="https://www.covid19india.org">www.covid19india.org</a> who are doing a great job in tracking the COVID-19 pandemic in India.<br></br>Kudos to them !
                 </Typography>
                 </Grid>
             </Container>
