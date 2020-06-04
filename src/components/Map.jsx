@@ -88,7 +88,8 @@ const Map = ({ data: { data1_s } }) => {
 
         const geographyStyle = {
             default: {
-                outline: 'none'
+                outline: 'none',
+                transition: 'all ease 0.25s'
             },
             hover: {
                 fill: 'white',

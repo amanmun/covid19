@@ -31,7 +31,7 @@ class Essentials extends React.Component {
         }
         return (
             <div>
-                <Paper elevation={0} style={{ minHeight: "95vh" }}>
+                <Paper elevation={0} style={{ minHeight: "100vh" }}>
                     <Container maxWidth="sm">
                         <Grid container className="pt-64" direction="row" justify="space-evenly" alignItems="flex-start">
                             <Grid item md={6} className="pt-64"></Grid>

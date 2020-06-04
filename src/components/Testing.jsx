@@ -36,7 +36,7 @@ class Testing extends React.Component {
         }
         return (
             <div>
-                <Paper elevation={0}>
+                <Paper elevation={0} style={{minHeight: "100vh"}}>
                     <Container maxWidth="lg">
                         <div className="fadeInUp pt-100" style={{ animationDelay: "1.5s" }}>
                             <TestTopstats data={modifiedData1} />

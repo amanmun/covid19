@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Label } from 'recharts';
 import Box from '@material-ui/core/Box';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Typography from '@material-ui/core/Typography';
 import { formatNumber } from './commonFunc/formatNumber';
 import Grid from '@material-ui/core/grid'
@@ -27,7 +28,8 @@ function TabPanel(props) {
 
 const TestChart = ({ data: { data1_t } }) => {
 
-  const [lcwidth, setLcwidth] = useState(window.innerWidth > 768 ? (window.innerWidth > 1025 ? 520 : 480) : 380);
+  let w = document.documentElement.clientWidth;
+  const [lcWidth, setLcwidth] = useState(w >= 768 ? 480 : w < 400 ? 330 : 380)
 
   let [tstd, setTstd] = useState('');
   let [date, setDate] = useState('');
@@ -64,13 +66,13 @@ const TestChart = ({ data: { data1_t } }) => {
 
     function displayWindowSize() {
       let w = document.documentElement.clientWidth;
-      if (w > 1025)
-        setLcwidth(520)
-      if (w > 768)
+      if (w >= 768)
         setLcwidth(480)
-      if (w <= 768) {
-        let temp = 380
-        setLcwidth(temp)
+      else {
+        if (w < 400)
+          setLcwidth(330)
+        else
+          setLcwidth(380)
       }
     }
 
@@ -84,32 +86,38 @@ const TestChart = ({ data: { data1_t } }) => {
       }
       return null;
     };
+
     function chart(bgcolor, color, text, data, datakey, customtool, statevar, datamax) {
       return (
-        < Box p={2} mt={2} mb={2} style={{ backgroundColor: bgcolor }
-        }>
-          <Typography variant="button" style={{ color: color, marginBottom: '-60px' }}>
-            Total {text}<br></br>
-            {date}<br></br>
-            {statevar !== '' ? formatNumber(statevar) : ''}
-          </Typography>
-          <LineChart data={data}
-            width={lcwidth}
+        <Box mt={2} mb={2}>
+          <LineChart
+            data={data}
+            width={lcWidth}
             height={160}
-            syncId="anyId">
-            <XAxis dataKey="dateformatted"
+            syncId="anyId"
+            style={{ backgroundColor: bgcolor }}
+            margin={{
+              top: 10, left: 5
+            }}>
+            <XAxis dataKey="date"
               stroke={color}
               interval="preserveStartEnd"
               domain={['auto', 'auto']}
-              strokeWidth={3}
-              tick={{ fontSize: 10, fontWeight: "bolder" }} />
+              strokeWidth={2}
+              tick={{ fontSize: 10 }}
+            >
+              <Label value={text} angle={0} dy={-120} position="insideTopLeft" fill={color} fontWeight={800} />
+              <Label value={statevar} formatter={formatNumber} angle={0}
+                dy={-105} position="insideTopLeft" fill={color} fontWeight={800} />
+              <Label value={date} angle={0} dy={-90} position="insideTopLeft" fill={color} fontWeight={800} />
+            </XAxis>
             <YAxis
               type="number"
               tickFormatter={DataFormater}
               domain={[0, (Math.ceil(datamax / 1000000)) * 1000000]}
-              strokeWidth={3}
+              strokeWidth={2}
               stroke={color}
-              tick={{ fontSize: 10, fontWeight: "bolder" }}
+              tick={{ fontSize: 10 }}
               orientation='right'
             />
             <CartesianGrid
@@ -118,12 +126,14 @@ const TestChart = ({ data: { data1_t } }) => {
             <Tooltip content={customtool} />
             <Line
               type="monotone"
-              dot={{ r: 2, fill: color }}
+              animationDuration={250}
+              dot={{ r: 1, fill: color }}
               dataKey={datakey}
               stroke={color}
-              activeDot={{ r: 4 }} />
+              strokeWidth={2}
+              activeDot={{ r: 3 }} />
           </LineChart>
-        </Box >
+        </Box>
       )
     }
 
@@ -132,7 +142,7 @@ const TestChart = ({ data: { data1_t } }) => {
       <div>
         <Box p={6} m="auto" textAlign="center" bgcolor="background.paper">
           <Typography variant="h6">
-            India Chart
+            India Test Chart
           </Typography>
         </Box>
         <Box>
@@ -142,9 +152,11 @@ const TestChart = ({ data: { data1_t } }) => {
             justify="space-evenly"
             alignItems="center"
           >
-            <Button variant="outlined" onClick={() => { setValue(2) }}>Last 7 days</Button>
-            <Button variant="outlined" onClick={() => { setValue(1) }}>Last 14 days</Button>
-            <Button variant="outlined" onClick={() => { setValue(0) }}>Beginning</Button>
+            <ButtonGroup disableElevation variant="text" color="inherit">
+              <Button onClick={() => { setValue(2) }}>Last 7 days</Button>
+              <Button onClick={() => { setValue(1) }}>Last 14 days</Button>
+              <Button onClick={() => { setValue(0) }}>Beginning</Button>
+            </ButtonGroup>
           </Grid>
           <TabPanel value={value} index={0}>
             <Grid
