@@ -23,30 +23,33 @@ const useRowStyles = makeStyles((theme) => ({
     minWidth: 200,
     maxWidth: 600,
     cursor: "pointer",
-
   },
   thclass1: {
-    fontSize: 11,
-    color: theme.palette.warning.main,
-    backgroundColor: "rgba(255,152,0,0.1)",
+    fontSize: "0.8rem",
+    fontWeight: '700',
+    backgroundColor: theme.palette.background.paper,
   },
   thclass2: {
-    fontSize: 11,
+    fontSize: "0.8rem",
+    fontWeight: '700',
     color: theme.palette.error.main,
     backgroundColor: "rgba(255,0,0,0.1)",
   },
   thclass3: {
-    fontSize: 11,
+    fontSize: "0.8rem",
+    fontWeight: '700',
     color: theme.palette.info.main,
     backgroundColor: "rgba(0,0,255,0.1)",
   },
   thclass4: {
-    fontSize: 11,
+    fontSize: "0.8rem",
+    fontWeight: '700',
     color: theme.palette.success.main,
     backgroundColor: "rgba(0,255,0,0.1)",
   },
   thclass5: {
-    fontSize: 11,
+    fontSize: "0.8rem",
+    fontWeight: '700',
     color: theme.palette.text.secondary,
     backgroundColor: theme.palette.action.selected,
   },
@@ -54,7 +57,7 @@ const useRowStyles = makeStyles((theme) => ({
     paddingRight: 2,
     paddingLeft: 2,
     color: theme.palette.action.active,
-    fontSize: "0.825rem",
+    fontSize: "0.8rem",
     fontWeight: 700
   },
   tbcnfd: {
@@ -173,6 +176,7 @@ export default function Datatable({ data: { data1_s, data2_sdd } }) {
       return <div></div>
     }
     else {
+
       let data1 = [...data1_s];
       data1.splice(0, 1)
       let data2 = Object.entries(data2_sdd);
@@ -200,8 +204,8 @@ export default function Datatable({ data: { data1_s, data2_sdd } }) {
               <caption>Compiled from State Govt. numbers</caption>
               <TableHead>
                 <TableRow>
-                  <TableCell />
-                  <TableCell style={{ paddingLeft: 15 }} className={classes.thclass1}>State</TableCell>
+                  <TableCell className={classes.thclass1}></TableCell>
+                  <TableCell className={classes.thclass1}>State</TableCell>
                   <TableCell align="center" className={classes.thclass2}>{window.innerWidth > "768" ? "Confirmed" : "Cnfd"}</TableCell>
                   <TableCell align="center" className={classes.thclass3}>{window.innerWidth > "768" ? "Active" : "Actv"}</TableCell>
                   <TableCell align="center" className={classes.thclass4}>{window.innerWidth > "768" ? "Recovered" : "Rcvrd"}</TableCell>
